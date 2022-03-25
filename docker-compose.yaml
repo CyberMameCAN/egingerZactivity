@@ -1,13 +1,33 @@
 version: '3'
 services:
-  fastapi-app:
+  project-egingerz-web:
+    container_name: project-egingerz-web
+    image: nginx:alpine
+    depends_on:
+      # `app`Because the service (container) needs to be started first`depends_on`Is specified
+      - project-egingerz-app
+    ports:
+      #Port mapping:"Host OS port:container(Nginx)Port"
+      - "7080:80"
+    volumes:
+      #volume mount:"Host OS path:Path in the container"
+      - ./web/conf.d:/etc/nginx/conf.d
+    networks:
+      - nginx_network
+
+  project-egingerz-app:
     build: .
     volumes:
       - .dockervenv:/src/.venv
       - .:/src
-    ports:
-      - 9980:8000
-  fastapi-db:
+    #ports:
+    #  - 9980:8000
+    expose:
+      - 8000
+    networks:
+      - nginx_network
+
+  project-egingerz-db:
     #image: mysql:8.0
     image: mysql:5.7
     #platform: linux/x86_64  # M1 Macの場合必要
@@ -21,6 +41,9 @@ services:
     ports:
       - 43301:3306  # ホストマシンのポート33306を、docker内のポート3306に接続する
 
+networks:
+  nginx_network:
+    driver: bridge
 #networks:
 #  default:
 #    external:
