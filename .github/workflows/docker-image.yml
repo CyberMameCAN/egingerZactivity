@@ -1,0 +1,31 @@
+name: Docker Image CI
+on:
+  push:
+    branches: [ main ]
+  #pull_request:
+  #  branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: エギンガーZ ActivityをVPSに自動デプロイ
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SECRET_KEY }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /usr/local/data/Docker/egingerz.to48
+            git pull origin main
+            #source myvenv/bin/activate
+            #docker-compose restart
+  #build:
+    #runs-on: ubuntu-latest
+
+    #steps:
+    #- uses: actions/checkout@v2
+    #- name: Build the Docker image
+    #  run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
