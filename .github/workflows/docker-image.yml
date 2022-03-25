@@ -18,7 +18,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /usr/local/data/Docker/egingerz.to48
+            cd /usr/local/data/Docker/egingerZactivity
             git pull origin main
             #source myvenv/bin/activate
             #docker-compose restart
