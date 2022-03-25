@@ -1,5 +1,3 @@
-docker-compose.yml
-
 .dockervenv
 .pytest_cache
 .venv
