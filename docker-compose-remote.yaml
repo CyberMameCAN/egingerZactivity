@@ -1,0 +1,54 @@
+# リモートサーバ側の定義ファイル
+version: '4'
+services:
+  project-egingerz-web:
+    container_name: project-egingerz-web
+    image: nginx:alpine
+    depends_on:
+      # `app`Because the service (container) needs to be started first`depends_on`Is specified
+      - project-egingerz-app
+    ports:
+      #Port mapping:"Host OS port:container(Nginx)Port"
+      - "7080:80"
+    volumes:
+      #volume mount:"Host OS path:Path in the container"
+      - ./web/conf.d:/etc/nginx/conf.d
+    #networks:
+    #  - nginx_network
+
+  project-egingerz-app:
+    build: .
+    volumes:
+      - .dockervenv:/src/.venv
+      - .:/src
+    #ports:
+    #  - 9980:8000
+    expose:
+      - 8000
+    #networks:
+    #  - nginx_network
+
+  project-egingerz-db:
+    #image: mysql:8.0
+    image: mysql:5.7
+    #platform: linux/x86_64  # M1 Macの場合必要
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: 'demo'
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - mysql_data:/var/lib/mysql
+    #command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 43301:3306
+
+#networks:
+#  nginx_network:
+#    driver: bridge
+networks:
+  default:
+    external:
+      name: https-portal
+
+volumes:
+  mysql_data:

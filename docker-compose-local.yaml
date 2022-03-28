@@ -1,3 +1,4 @@
+# ローカルの定義ファイル
 version: '3'
 services:
   project-egingerz-web:
