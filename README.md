@@ -1,12 +1,19 @@
-# FastAPIを使ってデモを動かす
+# FastAPIを使ってデモを表示してみました
 
-[FastAPI入門](https://zenn.dev/sh0nk/books/537bb028709ab9)
+### こちらを参考にしました
 
-こちらを参考に動かしてみました。
+- [FastAPI入門](https://zenn.dev/sh0nk/books/537bb028709ab9)
 
-初めてローカルにコピーした時は次のコマンドが必要(下記エラーが出る)
+### 公開サイト
+
+- [週末パドラー イカスミエギンガーZ Activity](https://egingerz.to48.org/)
+
+### 注意
+
+初めてローカルにコピーした時は次のコマンドが必要です(下記エラーが出る)。  
 docker-compose build の後、docker-compose upの前。
-$ docker-compose run --entrypoint "poetry install" project-egingerz-app
+
+    $ docker-compose run --entrypoint "poetry install" project-egingerz-app
 
     project-egingerz-app_1  | The virtual environment found in /src/.venv seems to be broken.
     project-egingerz-app_1  | Recreating virtualenv fastapi-app in /src/.venv
